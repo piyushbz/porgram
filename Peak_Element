@@ -1,0 +1,27 @@
+/* Find a peak element
+Given an array of integers A, find and return the peak element in it. An array element is peak if it is NOT smaller than its
+neighbors. For corner elements, we need to consider only one neighbor. For example, for input array {5, 10, 20, 15}, 20 is the
+only peak element. Following corner cases give better idea about the problem. */
+
+int Solution::solve(vector<int> &A) {
+    int last=A.size()-1;
+    int n=A.size()-1;
+    int first=0;
+    int mid=((last-first)/2)+first;
+    if (last==0) return A[0];
+    while (first<=last and mid>=0 and mid<=n)
+    {
+        if (mid==0 and A[mid+1]<=A[mid]) return A[mid];
+        else if (mid==n and A[mid]>=A[mid-1]) return A[mid];
+        else if (A[mid]>=A[mid-1] and A[mid]>=A[mid+1]) return A[mid];
+        else if (A[mid]<A[mid+1])
+        {first=mid+1;
+        mid=((last-first)/2)+first;
+        }
+        else
+        {
+            last=mid-1;
+            mid=((last-first)/2)+first;
+        }
+    }
+}
