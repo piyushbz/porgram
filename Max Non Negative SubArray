@@ -1,0 +1,64 @@
+"""
+Max Non Negative SubArray
+Find out the maximum sub-array of non negative numbers from an array. The sub-array should be continuous.
+That is, a sub-array created by choosing the second and fourth element and skipping the third element is 
+invalid. Maximum sub-array is defined in terms of the sum of the elements in the sub-array. Sub-array A 
+is greater than sub-array B if sum(A) > sum(B).
+
+Example:
+A : [1, 2, 5, -7, 2, 3]
+The two sub-arrays are [1, 2, 5] [2, 3].
+The answer is [1, 2, 5] as its sum is larger than [2, 3]
+NOTE: If there is a tie, then compare with segment's length and return segment which has maximum length
+NOTE 2: If there is still a tie, then return the segment with minimum starting index
+
+"""
+
+vector<int> Solution::maxset(vector<int> &A) {
+    long long int maxi=0;
+    int length=0;
+    int index=0;
+    long long int current_sum=0;
+    int current_length=0;
+    int current_index=0;
+    int j=-1;
+    vector<int> B;
+    for(auto i:A){
+        j++;
+        if (i>=0)
+        {
+            current_sum+=i;
+            current_length+=1;
+            if (current_sum==maxi)
+            {
+                if (current_length>length)
+                {
+                    length=current_length;
+                    index=current_index;
+                }
+            }
+            if(current_sum>maxi)
+            {
+               maxi=current_sum;
+               length=current_length;
+               index=current_index;
+               
+            }
+            
+        }
+        else
+        {
+            current_index=j+1;
+            current_length=0;
+            current_sum=0;
+        }
+    }
+    vector<int> x={A[0]};
+    
+    for(int i=index;i<index+length;i++)
+    {
+        B.push_back(A[i]);
+    }
+    return B;
+    
+}
